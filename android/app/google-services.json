@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "863880810753",
+    "project_id": "digitalworld-8fcf2",
+    "storage_bucket": "digitalworld-8fcf2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863880810753:android:952017ba4e63d9296dcb00",
+        "android_client_info": {
+          "package_name": "com.example.digitalworld"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaZdwMTPftWql0GeeesnwiUQDJ2SV3Kw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
