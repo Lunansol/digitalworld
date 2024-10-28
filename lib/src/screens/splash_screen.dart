@@ -1,18 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart'; // Google Sign-In 사용
 import 'package:video_player/video_player.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();  // 수정된 부분
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _controller;
-  Timer? _timer;  // nullable로 변경
+  Timer? _timer; // nullable로 변경
+  final GoogleSignIn _googleSignIn = GoogleSignIn(); // Google Sign-In 객체 초기화
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
           _navigateToNext();
         });
       }).catchError((error) {
-        debugPrint('Video initialization error: $error');  // print를 debugPrint로 변경
+        debugPrint('Video initialization error: $error');
         // 비디오 로드 실패시 바로 다음 화면으로 이동
         _navigateToNext();
       });
@@ -43,19 +44,20 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void _navigateToNext() {
+  void _navigateToNext() async {
     if (!mounted) return;
 
     _controller.removeListener(_checkVideo);
-    FirebaseAuth.instance.authStateChanges().first.then((user) {
-      if (!mounted) return;
+    // Google Sign-In 상태 확인
+    final GoogleSignInAccount? user = await _googleSignIn.signInSilently();
 
-      if (user == null) {
-        Navigator.pushReplacementNamed(context, '/login');
-      } else {
-        Navigator.pushReplacementNamed(context, '/home_page');
-      }
-    });
+    if (!mounted) return;
+
+    if (user == null) {
+      Navigator.pushReplacementNamed(context, '/login_page'); // 로그인 페이지로 이동
+    } else {
+      Navigator.pushReplacementNamed(context, '/home_page'); // 홈 페이지로 이동
+    }
   }
 
   @override
@@ -76,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void dispose() {
     _controller.dispose();
-    _timer?.cancel();  // null 체크와 함께 취소
+    _timer?.cancel(); // null 체크와 함께 취소
     super.dispose();
   }
 }

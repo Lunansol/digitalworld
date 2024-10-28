@@ -6,7 +6,7 @@ import '../screens/login_page.dart';
 Map<String, WidgetBuilder> getRoutes() {
   return {
     '/': (context) => const SplashScreen(),
-    '/login': (context) => const LoginPage(),
+    '/login_page': (context) => const LoginPage(),
     '/home_page':(context) => const HomePage(),
   };
 }

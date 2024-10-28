@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart'; // Google Sign-In 사용
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,12 +9,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn(); // Google Sign-In 객체 생성
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "DK's  Apps",
+          "DK's Apps",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
         ),
@@ -59,17 +61,16 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
-              onTap: _handleLogout,
+              onTap: _handleLogout, // 로그아웃 처리
             ),
           ],
         ),
       ),
-      body: Column(
+      body: const Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-            ],
+            children: [],
           ),
         ],
       ),
@@ -78,9 +79,10 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _handleLogout() async {
     try {
-      await FirebaseAuth.instance.signOut();
+      // Google 로그아웃
+      await _googleSignIn.signOut();
       if (!mounted) return;
-      _navigateToLoginPage();
+      _navigateToLoginPage(); // 로그아웃 후 로그인 페이지로 이동
     } catch (error) {
       debugPrint("Logout failed: $error");
       if (!mounted) return;

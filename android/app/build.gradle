@@ -28,6 +28,12 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // googleClientId를 문자열로 감싸줌
+        manifestPlaceholders = [
+                googleClientId: "160615986596-pl5kvshbo3gb2gsk1qb1c1ea4un32cf7.apps.googleusercontent.com",
+                applicationName: "com.example.digitalworld" // 여기서 applicationName 값을 정의
+        ]
     }
 
     buildTypes {
